@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laws of 10,000hours</title>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    
+</head>
+<body>
+    <style>
+        *{margin:0; padding:0;}
+        ul,li{list-style: none;}
+        h2{font-size:20px;}
+
+        .goal{margin:10px; padding:10px; background:rgb(255, 255, 171);}
+
+        .law{margin:10px;}
+
+        .tab{display: flex; width:100%; text-align: center;}
+        .tab li{flex:1; height:40px; line-height:44px; background:rgb(249, 150, 167); font-weight:600; border-right:1px solid #fff; cursor: pointer;}
+        li.on_tab{background:rgb(213, 73, 97); color:#fff;}
+        .tab li:hover{background: rgb(213, 73, 97); color:#fff;}
+        
+        .tabCont > div{display:none; background:rgb(240, 240, 240);}
+        .tabCont > div:first-child{display:block;}
+        .tabCont dl{display: flex; align-items: center; padding:0 10px; height:40px; border-bottom:3px dashed #ddd;}
+        .tabCont dl:last-child{border-bottom:none;}
+
+        .des{margin:10px 0; font-size: 13px;}
+        .des .pink{margin-right:3px; color:rgb(213, 73, 97);}
+    </style>
+    <!-- <h1>Laws of 10,000</h1> -->
+    <section class="goal">
+        <h2>Write your goal!</h2>
+        <article>
+            <form action="" class="goal_form"><input type="text"></form>
+            <button>remove</button>
+        </article>
+        <dl class="des">
+            <dt></dt>
+            <dd></dd>
+            <!-- <dd>( 계획대로 매일&인강 완료 <span class="pink">></span> 프엔으로취업/연봉인상/독립 <span class="pink">></span> 재택근무/프리랜서/해외수주/개발사업으로 월천 <span class="pink">></span> 세계관람 )</dd> -->
+        </dl>
+    </section>
+    <script>
+        const goalForm = document.querySelector(".goal_form"),
+        goalFormInput = goalForm.querySelector("input"),
+        goalResult = document.querySelector(".goal .des dd"),
+        goalRemoveBtn = document.querySelector(".goal button")
+
+        const LOCAL_DATA = "nickName"; //저장할 데이터의 key값
+
+        function hiddenAndResult(name) {//결과출력함수
+            goalResult.style.display = "block"; //결과출력공간 생성하기
+            //goalForm.style.display = "none"; //결과가 출력되면 form과 input태그 사라지게
+            goalRemoveBtn.style.display = "block"; //제거버튼 나오기
+            goalRemoveBtn.addEventListener("click", onClickGoalRemove); //제거버튼의 아래 삭제이벤트 발생시키기 
+            goalResult.innerText = `Hi! ${name}`; //결과출력하기
+        }
+
+        function onClickGoalRemove() {// 삭제버튼 클릭 시, 데이터 삭제 이벤트 발생
+            localStorage.removeItem(LOCAL_DATA); //원하는 key값, 즉 LOCAL_DATA 삭제
+            //loaded(); //페이지를 새로고침해서 이전 결과값 지우기
+            goalResult.style.display = "none"; //출력된결과태그 없애기
+            goalRemoveBtn.style.display = "none"; //제거버튼 없애기
+        }
+
+        function onSubmitGoal(e) {
+            e.preventDefault();
+            localStorage.setItem(LOCAL_DATA, goalFormInput.value); //input태그에 입력시, lacalStorage의 value값으로 저장
+            hiddenAndResult(goalFormInput.value);//결과출력함수 불러오기
+            goalFormInput.value = ""; //결과출력되면 인풋태그는 빈칸으로
+        }
+
+        function askForNickName() {// 초반작업
+            //goalForm.style.display = "block"; //input태그는 보이게
+            //goalResult.style.display = "none"; //결과 태그숨김
+            goalRemoveBtn.style.display = "none"; //초반에 제거버튼숨김
+            goalForm.addEventListener("submit", onSubmitGoal); //인풋입력후 엔터눌렀을때, form에 onSubmitGoal이벤트 추가(설정;발생)
+        }
+
+        function loaded() {//브라우저 localStorage에 데이터가 있을때와 없을때를 구분해서 실행시킬 함수.
+            const data = localStorage.getItem(LOCAL_DATA); //key, 즉 LOCAL_DATA로 value 불러오기
+            if (data === null) { // 데이터가 없을 시
+                askForNickName(); 
+            } else {//데이터가 이미 있을 시
+                hiddenAndResult(data); 
+            }
+        }
+
+        function init() {//처음 실행할 init함수
+            loaded();
+        }
+        init();
+    </script>
+    <section class="law">
+        <h2>Laws of 10,000</h2>
+        <ul class="tab">
+            <li class="on_tab">CODING</li>
+            <li>LISTENING</li>
+            <li>SPEAKING</li>
+            <li>READING</li>
+        </ul>
+        
+        <div class="tabCont">
+            <!-- 탭내용 (CODING) -->
+            <div>
+                <form method="get" action=""><!--http://geniehaip7.dothome.co.kr/file_sal/data/data_lawsof10000.html-->
+                    <dl>
+                        <dt>오늘 투자시간 : </dt>
+                        <dd><input type="text" id="todayHour" name="오늘투자 시간">시간 <input type="number" id="todayMin" name="오늘투자 분">분</dd> <!--onchange='printTodayHour()'-->
+                        <dd><button type="submit" onclick="printTotalHour();">입력</button></dd>
+                    </dl>
+                    <dl>
+                        <dt>이전시간 : </dt>
+                        <dd><span id="prevHour">7</span>시간 <span id="prevMin">35</span>분</dd>
+                    </dl>
+                    <dl>
+                        <dt>토탈시간 : </dt>
+                        <dd><span id="ttlHour"></span>시간 <span id="ttlMin"></span>분</dd>
+                    </dl>
+                    <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
+                </form>
+            </div>
+            <!-- 탭내용 (LISTENING) -->
+            <div>
+                <form method="get" action="">
+                    <dl>
+                        <dt>오늘 투자시간 : </dt>
+                        <dd><input type="text" id="todayHour" name="오늘투자 시간">시간 <input type="number" id="todayMin" name="오늘투자 분">분</dd> <!--onchange='printTodayHour()'-->
+                        <dd><button type="submit" onclick="printTotalHour();">입력</button></dd>
+                    </dl>
+                    <dl>
+                        <dt>이전시간 : </dt>
+                        <dd><span id="prevHour"></span>시간 <span id="prevMin">40</span>분</dd>
+                    </dl>
+                    <dl>
+                        <dt>토탈시간 : </dt>
+                        <dd><span id="ttlHour"></span>시간 <span id="ttlMin"></span>분</dd>
+                    </dl>
+                    <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
+                </form>
+            </div>
+            <!-- 탭내용 (SPEAKING) -->
+            <div>
+                <form method="get" action="">
+                    <dl>
+                        <dt>오늘 투자시간 : </dt>
+                        <dd><input type="text" id="todayHour" name="오늘투자 시간">시간 <input type="number" id="todayMin" name="오늘투자 분">분</dd> <!--onchange='printTodayHour()'-->
+                        <dd><button type="submit" onclick="printTotalHour();">입력</button></dd>
+                    </dl>
+                    <dl>
+                        <dt>이전시간 : </dt>
+                        <dd><span id="prevHour"></span>시간 <span id="prevMin">30</span>분</dd>
+                    </dl>
+                    <dl>
+                        <dt>토탈시간 : </dt>
+                        <dd><span id="ttlHour"></span>시간 <span id="ttlMin"></span>분</dd>
+                    </dl>
+                    <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
+                </form>
+            </div>
+            <!-- 탭내용 (READING) -->
+            <div>
+                <form method="get" action="">
+                    <dl>
+                        <dt>오늘 투자시간 : </dt>
+                        <dd><input type="text" id="todayHour" name="오늘투자 시간">시간 <input type="number" id="todayMin" name="오늘투자 분">분</dd> <!--onchange='printTodayHour()'-->
+                        <dd><button type="submit" onclick="printTotalHour();">입력</button></dd>
+                    </dl>
+                    <dl>
+                        <dt>이전시간 : </dt>
+                        <dd><span id="prevHour"></span>시간 <span id="prevMin">30</span>분</dd>
+                    </dl>
+                    <dl>
+                        <dt>토탈시간 : </dt>
+                        <dd><span id="ttlHour"></span>시간 <span id="ttlMin"></span>분</dd>
+                    </dl>
+                    <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
+                </form>
+            </div>
+        </div>
+        <ul class="des">
+            <li><span class="pink">*</span>시간과 분만 입력 할 수 있어요:)</li>
+        </ul>
+        
+        <script>
+            $(function(){
+                $(".tab li").click(function(){
+                    var tabIndex = $(this).index();
+                    $('.tabCont > div').hide();
+                    $('.tabCont > div').eq(tabIndex).show();
+                });
+            });
+        </script>
+    </section>
+    <script>
+        // https://hianna.tistory.com/411
+        // 인풋에 숫자만 입력되게하는건 노션에정리, 여기선 숫자만 입력하라는 알럿창후 기존 남은글자 지우기
+        // 시간이나 분만 입력시에도 작동하도록
+        // 저장하면 값이 서버 pathName에 저장되도록
+        function printTotalHour()  {
+            //오늘
+            let todayHour = document.getElementById('todayHour').value;
+            let todayMin = document.getElementById('todayMin').value;
+            //console.log(typeof todayHour);
+            console.log('오늘',todayHour);
+            
+            //이전
+            let prevHour = document.getElementById('prevHour').innerText; 
+            let prevMin = document.getElementById('prevMin').innerText;
+            
+            //토탈
+            const totalHour = parseInt(todayHour,10) + parseInt(prevHour,10);
+            const totalMin = parseInt(todayMin,10) + parseInt(prevMin,10);
+            
+            //토탈 출력
+            document.getElementById("ttlHour").innerText = totalHour;
+            document.getElementById("ttlMin").innerText = totalMin;
+        }
+    </script>
+    
+</body>
+</html>
