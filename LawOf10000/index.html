@@ -12,9 +12,12 @@
     <style>
         *{margin:0; padding:0;}
         ul,li{list-style: none;}
-        h2{font-size:20px;}
+        h2{display:inline-block; font-size:20px;}
+        button{margin-left:5px;}
 
         .goal{margin:10px; padding:10px; background:rgb(255, 255, 171);}
+        
+
 
         .law{margin:10px;}
 
@@ -38,69 +41,19 @@
             .tabCont__input dt{margin-bottom:5px;}
         }
     </style>
-    <section class="goal">
-        <h2>Write your goal!</h2>
-        <article>
-            <form action="" class="goal_form"><input type="text"></form>
-            <button>remove</button>
-        </article>
-        <dl class="des">
-            <dt></dt>
-            <dd></dd>
-            <!-- <dd>( 계획대로 매일&인강 완료 <span class="pink">></span> 프엔으로취업/연봉인상/독립 <span class="pink">></span> 재택근무/프리랜서/해외수주/개발사업으로 월천 <span class="pink">></span> 세계관람 )</dd> -->
-        </dl>
-    </section>
-    <script>
-        const goalForm = document.querySelector(".goal_form"),
-        goalFormInput = goalForm.querySelector("input"),
-        goalResult = document.querySelector(".goal .des dd"),
-        goalRemoveBtn = document.querySelector(".goal button")
-
-        const LOCAL_DATA = "nickName"; //저장할 데이터의 key값
-
-        function hiddenAndResult(name) {//결과출력함수
-            goalResult.style.display = "block"; //결과출력공간 생성하기
-            //goalForm.style.display = "none"; //결과가 출력되면 form과 input태그 사라지게
-            goalRemoveBtn.style.display = "block"; //제거버튼 나오기
-            goalRemoveBtn.addEventListener("click", onClickGoalRemove); //제거버튼의 아래 삭제이벤트 발생시키기 
-            goalResult.innerText = `Hi! ${name}`; //결과출력하기
+    
+    <!-- <script>
+        // add input tag
+        const addGoal = () => {
+            const goalAddinputWrap = document.getElementById("goal__list");
+            const newdd = document.createElement('dd'); //p태그 만들기
+            newdd.innerHTML = "<form action='' class='goal_form'><input type='text'><button onclick='removeGoal(this)'>remove</button></form>"; //p태그안에 input태그들 넣기
+            goalAddinputWrap.appendChild(newdd); //새로운노드를 자식노드 맨 마지막에 추가
         }
-
-        function onClickGoalRemove() {// 삭제버튼 클릭 시, 데이터 삭제 이벤트 발생
-            localStorage.removeItem(LOCAL_DATA); //원하는 key값, 즉 LOCAL_DATA 삭제
-            //loaded(); //페이지를 새로고침해서 이전 결과값 지우기
-            goalResult.style.display = "none"; //출력된결과태그 없애기
-            goalRemoveBtn.style.display = "none"; //제거버튼 없애기
+        const removeGoal = (obj) => {//생성된 input 삭제하기 ; obj = this
+            document.getElementById('goal__list').removeChild(obj.parentNode); //#inputWrap의 자식(onclick this가있는 태그의 부모요소) 삭제
         }
-
-        function onSubmitGoal(e) {
-            e.preventDefault();
-            localStorage.setItem(LOCAL_DATA, goalFormInput.value); //input태그에 입력시, lacalStorage의 value값으로 저장
-            hiddenAndResult(goalFormInput.value);//결과출력함수 불러오기
-            goalFormInput.value = ""; //결과출력되면 인풋태그는 빈칸으로
-        }
-
-        function askForNickName() {// 초반작업
-            //goalForm.style.display = "block"; //input태그는 보이게
-            //goalResult.style.display = "none"; //결과 태그숨김
-            goalRemoveBtn.style.display = "none"; //초반에 제거버튼숨김
-            goalForm.addEventListener("submit", onSubmitGoal); //인풋입력후 엔터눌렀을때, form에 onSubmitGoal이벤트 추가(설정;발생)
-        }
-
-        function loaded() {//브라우저 localStorage에 데이터가 있을때와 없을때를 구분해서 실행시킬 함수.
-            const data = localStorage.getItem(LOCAL_DATA); //key, 즉 LOCAL_DATA로 value 불러오기
-            if (data === null) { // 데이터가 없을 시
-                askForNickName(); 
-            } else {//데이터가 이미 있을 시
-                hiddenAndResult(data); 
-            }
-        }
-
-        function init() {//처음 실행할 init함수
-            loaded();
-        }
-        init();
-    </script>
+    </script> -->
     <section class="law">
         <ul class="tab">
             <li class="on_tab">CODING</li>
@@ -113,23 +66,23 @@
             <!-- 탭내용 (CODING) -->
             <div>
                 <form method="get" action=""><!--http://geniehaip7.dothome.co.kr/file_sal/data/data_lawsof10000.html-->
-                    <dl class="tabCont__input">
+                    <dl class="tabCont__input" id="todaysDoTime">
                         <dt>오늘 투자시간 : </dt>
-                        <dd><input type="text" id="todayHour" name="오늘투자 시간"> 시간 <input type="number" id="todayMin" name="오늘투자 분"> 분 <button type="submit" onclick="printTotalHour();">입력</button></dd>
+                        <dd><input type="number" id="todayHour" name="오늘투자 시간"> 시간 <input type="number" id="todayMin" name="오늘투자 분"> 분 <input type="button" value="입력" onclick="printTotalHour();"></dd>
                     </dl>
                     <dl>
                         <dt>이전시간 : </dt>
-                        <dd><span id="prevHour">10</span>시간 <span id="prevMin">13</span>분</dd>
+                        <dd><span id="prevHour"></span>시간 <span id="prevMin"></span>분</dd>
                     </dl>
                     <dl>
-                        <dt>토탈시간 : </dt>
+                        <dt>누적시간 : </dt>
                         <dd><span id="ttlHour"></span>시간 <span id="ttlMin"></span>분</dd>
                     </dl>
                     <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
                 </form>
             </div>
             <!-- 탭내용 (LISTENING) -->
-            <div>
+            <!-- <div>
                 <form method="get" action="">
                     <dl class="tabCont__input">
                         <dt>오늘 투자시간 : </dt>
@@ -145,9 +98,9 @@
                     </dl>
                     <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
                 </form>
-            </div>
+            </div> -->
             <!-- 탭내용 (SPEAKING) -->
-            <div>
+            <!-- <div>
                 <form method="get" action="">
                     <dl class="tabCont__input">
                         <dt>오늘 투자시간 : </dt>
@@ -163,9 +116,9 @@
                     </dl>
                     <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
                 </form>
-            </div>
+            </div> -->
             <!-- 탭내용 (READING) -->
-            <div>
+            <!-- <div>
                 <form method="get" action="">
                     <dl class="tabCont__input">
                         <dt>오늘 투자시간 : </dt>
@@ -181,13 +134,13 @@
                     </dl>
                     <dl><dt>1만시간까지 남은시간 : </dt><dd></dd></dl>
                 </form>
-            </div>
+            </div> -->
         </div>
         <ul class="des">
             <li><span class="pink">*</span>시간과 분만 입력 할 수 있어요:)</li>
         </ul>
         
-        <script>
+        <!-- <script>
             $(function(){
                 $(".tab li").click(function(){
                     var tabIndex = $(this).index();
@@ -195,8 +148,63 @@
                     $('.tabCont > div').eq(tabIndex).show();
                 });
             });
-        </script>
+        </script> -->
     </section>
+    <script>
+        const goalForm = document.querySelector(".goal_form"),
+        goalFormInput = goalForm.querySelector("input"),
+        goalResult = document.querySelector(".goal .des dd"),
+        goalRemoveBtn = document.querySelector(".goal .des button")
+
+        const LOCAL_DATA = "nickNamehiii"; //저장할 데이터의 key값
+
+        function hiddenAndResult(name) {//결과출력함수
+            goalResult.style.display = "block"; //결과출력공간 생성하기
+            goalForm.style.display = "block"; //결과가 출력되면 form과 input태그 사라지게
+            goalRemoveBtn.style.display = "block"; //제거버튼 나오기
+            goalRemoveBtn.addEventListener("click", onClickGoalRemove); //제거버튼의 아래 삭제이벤트 발생시키기 
+            goalResult.innerText = `Hi! ${name}`; //결과출력하기
+            goalRemoveBtn.style.display = "block"; //제거버튼 나오기
+        }
+
+        function onClickGoalRemove() {// 삭제버튼 클릭 시, 데이터 삭제 이벤트 발생
+            localStorage.removeItem(LOCAL_DATA); //원하는 key값, 즉 LOCAL_DATA 삭제
+            //loaded(); //페이지를 새로고침해서 이전 결과값 지우기
+            goalResult.style.display = "none"; //출력된결과태그 없애기
+            goalRemoveBtn.style.display = "block"; //제거버튼 없애기
+        }
+
+        function onSubmitGoal(e) {
+            e.preventDefault();
+            localStorage.setItem(LOCAL_DATA, goalFormInput.value); //input태그에 입력시, lacalStorage의 value값으로 저장
+            hiddenAndResult(goalFormInput.value);//결과출력함수 불러오기
+            //goalFormInput.value = ""; //결과출력되면 인풋태그는 빈칸으로
+            goalRemoveBtn.style.display = "block"; //초반에 제거버튼숨김
+        }
+
+        function askForNickName() {// 초반작업
+            //goalForm.style.display = "block"; //input태그는 보이게
+            //goalResult.style.display = "none"; //결과 태그숨김
+            goalRemoveBtn.style.display = "none"; //초반에 제거버튼숨김
+            goalForm.addEventListener("submit", onSubmitGoal); //인풋입력후 엔터눌렀을때, form에 onSubmitGoal이벤트 추가(설정;발생)
+            
+        }
+
+        function loaded() {//브라우저 localStorage에 데이터가 있을때와 없을때를 구분해서 실행시킬 함수.
+            const data = localStorage.getItem(LOCAL_DATA); //key, 즉 LOCAL_DATA로 value 불러오기
+            if (data === null) { // 데이터가 없을 시
+                askForNickName(); 
+            } else {//데이터가 이미 있을 시
+                hiddenAndResult(data); 
+            }
+        }
+
+        function init() {//처음 실행할 init함수
+            loaded();
+            
+        }
+        init();
+    </script>
     <script>
         // https://hianna.tistory.com/411
         // 인풋에 숫자만 입력되게하는건 노션에정리, 여기선 숫자만 입력하라는 알럿창후 기존 남은글자 지우기
@@ -206,22 +214,62 @@
             //오늘
             let todayHour = document.getElementById('todayHour').value;
             let todayMin = document.getElementById('todayMin').value;
-            //console.log(typeof todayHour);
-            console.log('오늘',todayHour);
-            
+            // console.log(typeof totalHourNumber);
+            // console.log('오늘',totalHourNumber);
+
+
             //이전
-            let prevHour = document.getElementById('prevHour').innerText; 
-            let prevMin = document.getElementById('prevMin').innerText;
+            //const totalHour = parseInt(todayHour,10) + parseInt(prevHour,10);
+            //const totalMin = parseInt(todayMin,10) + parseInt(prevMin,10);
+            let todayHourNumber= Number(todayHour);
+            let todayMinNumber= Number(todayMin);
+            document.getElementById("prevHour").innerHTML = todayHourNumber;
+            document.getElementById("prevMin").innerText = todayMinNumber;
+
+            //누적
+            let ttlHourNumber= Number(todayHour) + todayHourNumber;
+            let ttlMinNumber= Number(todayMin) + todayMinNumber;
+            document.getElementById("ttlHour").innerHTML = ttlHourNumber;
+            document.getElementById("ttlMin").innerText = ttlMinNumber;
+
             
-            //토탈
-            const totalHour = parseInt(todayHour,10) + parseInt(prevHour,10);
-            const totalMin = parseInt(todayMin,10) + parseInt(prevMin,10);
-            
-            //토탈 출력
-            document.getElementById("ttlHour").innerText = totalHour;
-            document.getElementById("ttlMin").innerText = totalMin;
         }
     </script>
-    
+
+    <!-- -------------------- -->
+    <input type="text" id="ls_input"/>
+    <div id="ls_result"></div>
+    <hr>
+    <div id="ls_prevresult"></div>
+
+<script>
+    (function () {
+        var lsInputData = localStorage.getItem("nnnnputLog") || "";
+        var lsResult = document.getElementById("ls_result");
+        var lsInput = document.getElementById("ls_input");
+        var lsPrevResult = document.getElementById("ls_prevresult");
+        var lsPrevResultData = localStorage.getItem("nnnnputLog") || "";
+
+        
+        if (lsInputData) {lsPrevResult.innerHTML = lsInputData;}
+        
+        lsInput.addEventListener("change", function () {
+            if(lsInput.value == "clear"){
+                lsInput.value = "";
+                localStorage.clear();
+                lsPrevResult.innerHTML = "";
+                lsInputData = "";
+                return;
+                
+            }
+            lsInputData += parseInt(lsInput.value,10);
+            lsPrevResultData += parseInt(lsPrevResultData.innerHTML,10)+"<br>";
+            lsPrevResult.innerHTML = lsInputData;
+            localStorage.setItem("nnnnputLog", lsInputData);
+            //lsInputData.value = "후잉";
+        });
+        console.log(isNaN(lsInputData));
+    }());
+</script>
 </body>
 </html>

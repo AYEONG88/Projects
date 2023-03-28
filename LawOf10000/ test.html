@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div>
+    <input type="tel" class='input_val' numberOnly onchange='printName()'/>
+    <div class='input_result'></div> 
+</div>
+<script>
+    let input = document.querySelector('.input_val');
+    let inputResult = document.querySelector('.input_result');
+	
+
+    $(document).on("keyup", "input[numberOnly]", function() {
+        //인풋에 숫자만입력
+        let typingValue = this.value;
+        if(isNaN(typingValue)){
+            alert('숫자로 입력해주세요:)');
+            $(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+        }
+    }); 
+
+    //출력
+    function printName()  {
+		let inputVal = input.value;
+		let inputValNum = Number(inputVal);
+		input.value = "";
+		
+		let inputResultNum = Number(inputResult.innerText);
+		inputResult.innerText = inputResultNum+inputValNum;
+		//console.log(input.value);
+		//console.log(typeof(inputValNum));
+		//console.log(inputValNum);
+		//console.log(inputResultNum);
+	}
+
+</script>
+</body>
+</html>
