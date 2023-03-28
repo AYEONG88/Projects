@@ -14,7 +14,7 @@
     <div class='input_result'></div> 
 </div>
 <script>
-    let input = document.querySelector('.input_val');
+    
     let inputResult = document.querySelector('.input_result');
 	
 
@@ -29,6 +29,7 @@
 
     //출력
     function printName()  {
+        let input = document.querySelector('.input_val');
 		let inputVal = input.value;
 		let inputValNum = Number(inputVal);
 		input.value = "";
@@ -39,8 +40,42 @@
 		//console.log(typeof(inputValNum));
 		//console.log(inputValNum);
 		//console.log(inputResultNum);
-	}
+	}//출력끝
 
+    
 </script>
+
+<h2>로컬스토리지</h2>
+<input type="text" id="ls_input"/>
+<div id="ls_result"></div>
+
+<script>
+    (function () {
+        var lsInputData = localStorage.getItem("candy") || "";
+        var lsInput = document.getElementById("ls_input");
+        var lsResult = document.getElementById("ls_result");
+        
+        
+        if (lsInputData) {lsResult.innerHTML = lsInputData;}
+        
+        lsInput.addEventListener("change", function () {
+            /*if(lsInput.value == "clear"){
+                lsInput.value = "";
+                localStorage.clear();
+                lsResult.innerHTML = "";
+                lsInputData = "";
+                return;
+            }*/
+            
+            
+            lsInputData = Number(lsInput.value)+Number(lsResult.innerHTML); //로컬스토리지
+            lsResult.innerHTML = lsInputData;
+            
+            localStorage.setItem("candy", lsInputData);
+            lsInputData.value = "";
+        });
+    }());
+</script>
+
 </body>
 </html>
