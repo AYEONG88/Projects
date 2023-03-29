@@ -9,73 +9,61 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div>
-    <input type="tel" class='input_val' numberOnly onchange='printName()'/>
-    <div class='input_result'></div> 
-</div>
-<script>
-    
-    let inputResult = document.querySelector('.input_result');
-	
+    <div class="box">
+        <input type="text" class="input_box"> <button onclick="add_textbox()">추가</button>
+        <ul class="goal"></ul>
+    </div>
 
-    $(document).on("keyup", "input[numberOnly]", function() {
-        //인풋에 숫자만입력
-        let typingValue = this.value;
-        if(isNaN(typingValue)){
-            alert('숫자로 입력해주세요:)');
-            $(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+    <script>
+        let icecreamData = localStorage.getItem("icecreammmmm") || "";
+        const box = document.querySelector(".box");
+        const inputBox = document.querySelector(".input_box");
+        const goal = document.querySelector('.goal');
+        const li = document.createElement('ul');
+        if (icecreamData) {goal.innerHTML = icecreamData;}
+
+        const add_textbox = () => {
+            icecreamData += "<li>"+inputBox.value+" <input type='button' value='삭제' onclick='remove(this)'><br/></li>";
+            goal.innerHTML = icecreamData;
+            //box.appendChild(li);
+            localStorage.setItem("icecreammmmm", icecreamData);
+            inputBox.value="";
         }
-    }); 
+        const remove = (obj) => {
+            document.querySelector('.goal').removeChild(obj.parentNode);
+        }
+    </script>
 
-    //출력
-    function printName()  {
-        let input = document.querySelector('.input_val');
-		let inputVal = input.value;
-		let inputValNum = Number(inputVal);
-		input.value = "";
-		
-		let inputResultNum = Number(inputResult.innerText);
-		inputResult.innerText = inputResultNum+inputValNum;
-		//console.log(input.value);
-		//console.log(typeof(inputValNum));
-		//console.log(inputValNum);
-		//console.log(inputResultNum);
-	}//출력끝
+<section class="timeBox">
+    <input type="tel" class="ls_input" numberOnly /> <button>입력</button><!--onchange='printName()'-->
+    <div class="ls_result"></div>
 
-    
-</script>
-
-<h2>로컬스토리지</h2>
-<input type="text" id="ls_input"/>
-<div id="ls_result"></div>
-
-<script>
-    (function () {
-        var lsInputData = localStorage.getItem("candy") || "";
-        var lsInput = document.getElementById("ls_input");
-        var lsResult = document.getElementById("ls_result");
+    <script>
+        // number only
+        $(document).on("keyup", "input[numberOnly]", function() {
+            let typingValue = this.value;
+            if(isNaN(typingValue)){
+                alert('숫자로 입력해주세요:)');
+                $(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+            }
+        }); 
+        // local storage
+        let lsInputData = localStorage.getItem("candy") || "";
+        let lsInput = document.querySelector(".ls_input");
+        let timeBoxBtn = document.querySelector(".timeBox button");
+        let lsResult = document.querySelector(".ls_result");
         
+        if (lsInputData) {lsResult.innerText = lsInputData;}
         
-        if (lsInputData) {lsResult.innerHTML = lsInputData;}
-        
-        lsInput.addEventListener("change", function () {
-            /*if(lsInput.value == "clear"){
-                lsInput.value = "";
-                localStorage.clear();
-                lsResult.innerHTML = "";
-                lsInputData = "";
-                return;
-            }*/
-            
-            
-            lsInputData = Number(lsInput.value)+Number(lsResult.innerHTML); //로컬스토리지
-            lsResult.innerHTML = lsInputData;
-            
+        timeBoxBtn.addEventListener("click", function () {
+            lsInputData = Number(lsInput.value)+Number(lsResult.innerText); 
+            lsResult.innerText = lsInputData;
             localStorage.setItem("candy", lsInputData);
-            lsInputData.value = "";
+            lsInput.value = "";
         });
-    }());
-</script>
+    </script>
+</section>
+
 
 </body>
 </html>
