@@ -72,6 +72,14 @@
             <span class="result_m_s"></span> 분
         </div>
     </article>
+    <article>
+        <h2>쓰기</h2>
+        <input type="tel" class="input_h_w" numberOnly /> 개
+        <button class="btn_w">입력</button>
+        <div>누적개수
+            <span class="result_h_w"></span> 문장
+        </div>
+    </article>
     
 
     <script>
@@ -227,6 +235,21 @@
 
             localStorage.setItem("candy_h_s", candyH_s);
             localStorage.setItem("candy_m_s", candyM_s);
+        });
+        // local storage(쓰기)
+        let candyH_w = localStorage.getItem("candy_h_w") || "";
+        let inputH_w = document.querySelector(".input_h_w");
+        let timeBoxBtn_w = document.querySelector(".btn_w");
+        let resultH_w = document.querySelector(".result_h_w");
+        
+        if (candyH_w) {resultH_w.innerText = candyH_w;}
+        
+        timeBoxBtn_w.addEventListener("click", function () {
+            candyH_w = Number(inputH_w.value)+Number(resultH_w.innerText); 
+            resultH_w.innerText = candyH_w;
+            inputH_w.value = "";
+
+            localStorage.setItem("candy_h_w", candyH_w);
         });
         
        
