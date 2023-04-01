@@ -11,7 +11,10 @@
 <body>
     <div class="box">
         <input type="text" class="input_box"> <button onclick="add_textbox()">추가</button>
-        <ul class="goal"></ul>
+        <ul class="goal">
+            <li>2025년까지 6천모아서 너무 맘에드는 내집마련</li>
+            <li>올해 엘리인강 다 듣고 너무 맘에드는 프엔개발자로 취직</li>
+        </ul>
     </div>
 
     <script>
@@ -20,6 +23,16 @@
         const inputBox = document.querySelector(".input_box");
         const goal = document.querySelector('.goal');
         const li = document.createElement('ul');
+        
+        
+        // $(function(){
+        //     $(".box button").click(function(){
+        //         var Index = $('.goal li').index();
+        //         $('.tabCont > div').hide();
+        //         $('.tabCont > div').eq(tabIndex).show();
+        //     });
+        // });
+        
         if (icecreamData) {goal.innerHTML = icecreamData;}
 
         const add_textbox = () => {
@@ -28,6 +41,7 @@
             //box.appendChild(li);
             localStorage.setItem("icecreammmmm", icecreamData);
             inputBox.value="";
+            //console.log(leng);
         }
         const remove = (obj) => {
             document.querySelector('.goal').removeChild(obj.parentNode);
@@ -35,8 +49,19 @@
     </script>
 
 <section class="timeBox">
-    <input type="tel" class="ls_input" numberOnly /> <button>입력</button><!--onchange='printName()'-->
-    <div class="ls_result"></div>
+    <style>
+        input{width:50px;}
+    </style>
+    <input type="tel" class="input_h" numberOnly /> 시간
+    <input type="tel" class="input_m" numberOnly /> 분
+    <button>입력</button><!--onchange='printName()'-->
+    <div>누적시간
+        <span class="result_h"></span> 시간
+        <span class="result_m"></span> 분<br/>
+        남은시간 
+        <span class="result_lh"></span> 시간
+        <span class="result_lm"></span> 분
+    </div>
 
     <script>
         // number only
@@ -48,19 +73,59 @@
             }
         }); 
         // local storage
-        let lsInputData = localStorage.getItem("candy") || "";
-        let lsInput = document.querySelector(".ls_input");
+        let candyH = localStorage.getItem("candy_h") || "";
+        let candyM = localStorage.getItem("candy_m") || "";
+        let candyLH = localStorage.getItem("candy_lh") || "";
+        let candyLM = localStorage.getItem("candy_lm") || "";
+        let inputH = document.querySelector(".input_h");
+        let inputM = document.querySelector(".input_m");
         let timeBoxBtn = document.querySelector(".timeBox button");
-        let lsResult = document.querySelector(".ls_result");
+        let resultH = document.querySelector(".result_h");
+        let resultM = document.querySelector(".result_m");
+        let resultLH = document.querySelector(".result_lh");
+        let resultLM = document.querySelector(".result_lm");
         
-        if (lsInputData) {lsResult.innerText = lsInputData;}
+        if (candyH) {resultH.innerText = candyH;}
+        if (candyM) {resultM.innerText = candyM;}
+        if (candyLH) {resultLH.innerText = candyLH;}
+        if (candyLM) {resultLM.innerText = candyLM;}
         
         timeBoxBtn.addEventListener("click", function () {
-            lsInputData = Number(lsInput.value)+Number(lsResult.innerText); 
-            lsResult.innerText = lsInputData;
-            localStorage.setItem("candy", lsInputData);
-            lsInput.value = "";
+            candyH = Number(inputH.value)+Number(resultH.innerText); 
+            candyM = Number(inputM.value)+Number(resultM.innerText); 
+            candyLH = 9999-candyH; 
+            candyLM = 60-candyM; 
+            resultH.innerText = candyH;
+            resultM.innerText = candyM;
+            resultLH.innerText = candyLH;
+            resultLM.innerText = candyLM;
+            inputH.value = "";
+            inputM.value = "";
+
+        if(candyM>=60){
+            candyH = Number(inputH.value)+Number(resultH.innerText)+parseInt(candyM/60);
+            candyM =  parseInt(candyM%60);
+            candyLH = 9999-candyH; 
+            candyLM = candyM;
+            console.log(candyM);
+            resultH.innerText = candyH;
+            resultM.innerText = candyM;
+            resultLH.innerText = candyLH;
+            resultLM.innerText = candyLM;
+        };
+
+        localStorage.setItem("candy_h", candyH);
+        localStorage.setItem("candy_m", candyM);
+        localStorage.setItem("candy_lh", candyLH);
+        localStorage.setItem("candy_lm", candyLM);
         });
+
+        if(candyM=60){
+            candyH = Number(inputH.value)+Number(resultH.innerText)+parseInt(candyM/60)+1;
+            candyLH = 10000-candyH; 
+        }
+
+        //localStorage.clear();
     </script>
 </section>
 
