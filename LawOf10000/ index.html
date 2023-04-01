@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sally's 10000</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body onload="showImage()">
+    <!-- <h1>GOAL</h1> -->
+    <ul class="goal">
+        <li>✓ 2025년까지 6천모아서 <b>내집마련</b></li>
+        <li>✓ 올해 엘리인강 다 듣고 <b>프엔개발자로 취직</b></li>
+    </ul>
+
+<section class="timeBox">
+    <img id="introImg">
+    <style>
+        *{margin:0; padding:0;}
+        body{background:yellow;}
+        .goal{padding:10px;margin:10px;}
+        .goal li{margin-top:5px; border-bottom: dotted; list-style:none;}
+        b{color:rgb(255, 96, 96);}
+
+        input{width:30px;}
+        /* .timeBox{background:url(./img/bart.png);} */
+        .timeBox{padding:10px; background:rgba(255, 255, 255, 0.8); }
+        article{margin-bottom:10px;}
+        article > div{margin-top:5px;}
+        h2{display: inline-block;}
+        img{position: absolute; z-index: -1; width:100%; }
+    </style>
+    <article>
+        <h2>코딩</h2>
+        <input type="tel" class="input_h_c" numberOnly /> 시간
+        <input type="tel" class="input_m_c" numberOnly /> 분
+        <button class="btn_c">입력</button>
+        <div>누적시간
+            <span class="result_h_c"></span> 시간
+            <span class="result_m_c"></span> 분
+        </div>
+    </article>
+    <article>
+        <h2>듣기</h2>
+        <input type="tel" class="input_h_l" numberOnly /> 시간
+        <input type="tel" class="input_m_l" numberOnly /> 분
+        <button class="btn_l">입력</button>
+        <div>누적시간
+            <span class="result_h_l"></span> 시간
+            <span class="result_m_l"></span> 분
+        </div>
+    </article>
+    <article>
+        <h2>읽기</h2>
+        <input type="tel" class="input_h_r" numberOnly /> 시간
+        <input type="tel" class="input_m_r" numberOnly /> 분
+        <button class="btn_r">입력</button>
+        <div>누적시간
+            <span class="result_h_r"></span> 시간
+            <span class="result_m_r"></span> 분
+        </div>
+    </article>
+    <article>
+        <h2>말하기</h2>
+        <input type="tel" class="input_h_s" numberOnly /> 시간
+        <input type="tel" class="input_m_s" numberOnly /> 분
+        <button class="btn_s">입력</button>
+        <div>누적시간
+            <span class="result_h_s"></span> 시간
+            <span class="result_m_s"></span> 분
+        </div>
+    </article>
+    
+
+    <script>
+        // tab
+        $(function(){
+            $(".box button").click(function(){
+                var Index = $('.goal li').index();
+                $('.tabCont > div').hide();
+                $('.tabCont > div').eq(tabIndex).show();
+            });
+        });
+
+        //random img
+        var imgArray= new Array();
+        imgArray[0]="./img/bart.png";  
+        imgArray[1]="./img/homer.png"; 
+        imgArray[2]="./img/lisa.png"; 
+        imgArray[3]="./img/maggie.png"; 
+        imgArray[4]="./img/marge.png"; 
+ 
+        
+        function showImage()
+        {
+            var imgNum=Math.round(Math.random()*4);
+            var objImg=document.getElementById("introImg");
+            objImg.src=imgArray[imgNum];
+        }
+
+        // number only
+        $(document).on("keyup", "input[numberOnly]", function() {
+            let typingValue = this.value;
+            if(isNaN(typingValue)){
+                alert('숫자로 입력해주세요:)');
+                $(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+            }
+        }); 
+        // local storage(코딩)
+        let candyH_c = localStorage.getItem("candy_h_c") || "";
+        let candyM_c = localStorage.getItem("candy_m_c") || "";
+        let inputH_c = document.querySelector(".input_h_c");
+        let inputM_c = document.querySelector(".input_m_c");
+        let timeBoxBtn_c = document.querySelector(".btn_c");
+        let resultH_c = document.querySelector(".result_h_c");
+        let resultM_c = document.querySelector(".result_m_c");
+        
+        if (candyH_c) {resultH_c.innerText = candyH_c;}
+        if (candyM_c) {resultM_c.innerText = candyM_c;}
+        
+        timeBoxBtn_c.addEventListener("click", function () {
+            candyH_c = Number(inputH_c.value)+Number(resultH_c.innerText); 
+            candyM_c = Number(inputM_c.value)+Number(resultM_c.innerText); 
+            resultH_c.innerText = candyH_c;
+            resultM_c.innerText = candyM_c;
+            inputH_c.value = "";
+            inputM_c.value = "";
+
+            if(candyM_c>=60){
+                candyH_c = Number(inputH_c.value)+Number(resultH_c.innerText)+parseInt(candyM_c/60);
+                candyM_c =  parseInt(candyM_c%60);
+                resultH_c.innerText = candyH_c;
+                resultM_c.innerText = candyM_c;
+            };
+
+            localStorage.setItem("candy_h_c", candyH_c);
+            localStorage.setItem("candy_m_c", candyM_c);
+        });
+        // local storage(듣기)
+        let candyH_l = localStorage.getItem("candy_h_l") || "";
+        let candyM_l = localStorage.getItem("candy_m_l") || "";
+        let inputH_l = document.querySelector(".input_h_l");
+        let inputM_l = document.querySelector(".input_m_l");
+        let timeBoxBtn_l = document.querySelector(".btn_l");
+        let resultH_l = document.querySelector(".result_h_l");
+        let resultM_l = document.querySelector(".result_m_l");
+        
+        if (candyH_l) {resultH_l.innerText = candyH_l;}
+        if (candyM_l) {resultM_l.innerText = candyM_l;}
+        
+        timeBoxBtn_l.addEventListener("click", function () {
+            candyH_l = Number(inputH_l.value)+Number(resultH_l.innerText); 
+            candyM_l = Number(inputM_l.value)+Number(resultM_l.innerText); 
+            resultH_l.innerText = candyH_l;
+            resultM_l.innerText = candyM_l;
+            inputH_l.value = "";
+            inputM_l.value = "";
+
+            if(candyM_l>=60){
+                candyH_l = Number(inputH_l.value)+Number(resultH_l.innerText)+parseInt(candyM_l/60);
+                candyM_l =  parseInt(candyM_l%60);
+                resultH_l.innerText = candyH_l;
+                resultM_l.innerText = candyM_l;
+            };
+
+            localStorage.setItem("candy_h_l", candyH_l);
+            localStorage.setItem("candy_m_l", candyM_l);
+        });
+        // local storage(읽기)
+        let candyH_r = localStorage.getItem("candy_h_r") || "";
+        let candyM_r = localStorage.getItem("candy_m_r") || "";
+        let inputH_r = document.querySelector(".input_h_r");
+        let inputM_r = document.querySelector(".input_m_r");
+        let timeBoxBtn_r = document.querySelector(".btn_r");
+        let resultH_r = document.querySelector(".result_h_r");
+        let resultM_r = document.querySelector(".result_m_r");
+        
+        if (candyH_r) {resultH_r.innerText = candyH_r;}
+        if (candyM_r) {resultM_r.innerText = candyM_r;}
+        
+        timeBoxBtn_r.addEventListener("click", function () {
+            candyH_r = Number(inputH_r.value)+Number(resultH_r.innerText); 
+            candyM_r = Number(inputM_r.value)+Number(resultM_r.innerText); 
+            resultH_r.innerText = candyH_r;
+            resultM_r.innerText = candyM_r;
+            inputH_r.value = "";
+            inputM_r.value = "";
+
+            if(candyM_r>=60){
+                candyH_r = Number(inputH_r.value)+Number(resultH_r.innerText)+parseInt(candyM_r/60);
+                candyM_r =  parseInt(candyM_r%60);
+                resultH_r.innerText = candyH_r;
+                resultM_r.innerText = candyM_r;
+            };
+
+            localStorage.setItem("candy_h_r", candyH_r);
+            localStorage.setItem("candy_m_r", candyM_r);
+        });
+        // local storage(말하기)
+        let candyH_s = localStorage.getItem("candy_h_s") || "";
+        let candyM_s = localStorage.getItem("candy_m_s") || "";
+        let inputH_s = document.querySelector(".input_h_s");
+        let inputM_s = document.querySelector(".input_m_s");
+        let timeBoxBtn_s = document.querySelector(".btn_s");
+        let resultH_s = document.querySelector(".result_h_s");
+        let resultM_s = document.querySelector(".result_m_s");
+        
+        if (candyH_s) {resultH_s.innerText = candyH_s;}
+        if (candyM_s) {resultM_s.innerText = candyM_s;}
+        
+        timeBoxBtn_s.addEventListener("click", function () {
+            candyH_s = Number(inputH_s.value)+Number(resultH_s.innerText); 
+            candyM_s = Number(inputM_s.value)+Number(resultM_s.innerText); 
+            resultH_s.innerText = candyH_s;
+            resultM_s.innerText = candyM_s;
+            inputH_s.value = "";
+            inputM_s.value = "";
+
+            if(candyM_s>=60){
+                candyH_s = Number(inputH_s.value)+Number(resultH_s.innerText)+parseInt(candyM_s/60);
+                candyM_s =  parseInt(candyM_s%60);
+                resultH_s.innerText = candyH_s;
+                resultM_s.innerText = candyM_s;
+            };
+
+            localStorage.setItem("candy_h_s", candyH_s);
+            localStorage.setItem("candy_m_s", candyM_s);
+        });
+        
+       
+        //localStorage.clear();
+    </script>
+</section>
+
+
+</body>
+</html>
