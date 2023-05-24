@@ -3,13 +3,19 @@
 <head>
   <title>HERM'S STOPWATCH</title>
   <link rel="shortcut icon" href="https://ayeong88.github.io/Projects/LawOf10000/img/favicon.ico"/>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
   <style>
     body {text-align: center; font-size: 48px; background:yellow;}
     button {font-size: 24px; padding: 10px 20px;}
-    #introImg{position: absolute; z-index: -1; width:100%; }
+    section{
+    position: relative;
+    padding: 10px; background: rgba(255, 255, 255, 0.8);}
+    img{position: absolute; z-index: -1; top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);}
   </style>
 </head>
-<body>
+<body onload="showImage()">
     <section>
         <img id="introImg" src="./img/homer.png">
         <!-- 듣기 시작 -->  
@@ -240,6 +246,13 @@
         imgArray[2]="./img/lisa.png"; 
         imgArray[3]="./img/maggie.png"; 
         imgArray[4]="https://ayeong88.github.io/Projects/LawOf10000/img/marge.png"; 
+
+        function showImage()
+        {
+            var imgNum=Math.round(Math.random()*4);
+            var objImg=document.getElementById("introImg");
+            objImg.src=imgArray[imgNum];
+        }
     </script>
 </body>
 </html>
