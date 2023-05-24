@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HERM'S STOPWATCH</title>
+  <link rel="shortcut icon" href="./favicon.ico"/>
+  <style>
+    body {text-align: center; font-size: 48px;}
+    button {font-size: 24px; padding: 10px 20px;}
+  </style>
+</head>
+<body>
+    <section>
+        <!-- 듣기 시작 -->  
+        <article>
+            <h2 id="timer_listening">0:00</h2>
+            <button id="startButton_listening">LISTENING START</button>
+            <button id="stopButton_listening">LISTENING PASUE</button>
+
+            <script>
+                let startTime;
+                let elapsedTime = 0;
+                let timerInterval;
+
+                function startTimer() {
+                    startTime = Date.now() - elapsedTime;
+                    timerInterval = setInterval(updateTimer, 10);
+                }
+
+                function stopTimer() {
+                    clearInterval(timerInterval);
+                }
+
+                function updateTimer() {
+                    let currentTime = Date.now();
+                    elapsedTime = currentTime - startTime;
+                    updateTimerDisplay_listening();
+                }
+
+                function updateTimerDisplay_listening() {
+                    let minutes = Math.floor(elapsedTime / 60000);
+                    let seconds = Math.floor((elapsedTime % 60000) / 1000);
+
+                    let timerDisplay = minutes.toString().padStart(2, '0') + ':' +
+                                    seconds.toString().padStart(2, '0');
+
+                    document.getElementById("timer_listening").textContent = timerDisplay;
+                }
+
+                function saveTimerState() {
+                    localStorage.setItem('stopwatchElapsed_listening', elapsedTime.toString());
+                }
+
+                function loadTimerState() {
+                    let storedElapsed_listening = localStorage.getItem('stopwatchElapsed_listening');
+                    if (storedElapsed_listening) {
+                        elapsedTime = parseInt(storedElapsed_listening);
+                        updateTimerDisplay_listening();
+                    }
+                }
+
+                document.getElementById("startButton_listening").addEventListener("click", startTimer);
+                document.getElementById("stopButton_listening").addEventListener("click", stopTimer);
+                window.addEventListener("beforeunload", saveTimerState);
+                window.addEventListener("load", loadTimerState);
+            </script> 
+        </article>
+
+        <!-- 읽기 시작 -->  
+        <article>
+            <h2 id="timer_reading">0:00</h2>
+            <button id="startButton_reading">READING START</button>
+            <button id="stopButton_reading">READING PAUSE</button>
+
+            <script>
+                let startTime_reading;
+                let elapsedTime_reading = 0;
+                let timerInterval_reading;
+
+                function startTimer_reading() {
+                    startTime_reading = Date.now() - elapsedTime_reading;
+                    timerInterval_reading = setInterval(updateTimer_reading, 10);
+                }
+
+                function stopTimer_reading() {
+                    clearInterval(timerInterval_reading);
+                }
+
+                function updateTimer_reading() {
+                    let currentTime = Date.now();
+                    elapsedTime_reading = currentTime - startTime_reading;
+                    updateTimerDisplay_reading();
+                }
+
+                function updateTimerDisplay_reading() {
+                    let minutes = Math.floor(elapsedTime_reading / 60000);
+                    let seconds = Math.floor((elapsedTime_reading % 60000) / 1000);
+
+                    let timerDisplay_reading = minutes.toString().padStart(2, '0') + ':' +
+                                    seconds.toString().padStart(2, '0');
+
+                    document.getElementById("timer_reading").textContent = timerDisplay_reading;
+                }
+
+                function saveTimerState() {
+                    localStorage.setItem('stopwatchElapsed_reading', elapsedTime_reading.toString());
+                }
+
+                function loadTimerState() {
+                    let storedElapsed_reading = localStorage.getItem('stopwatchElapsed_reading');
+                    if (storedElapsed_reading) {
+                        elapsedTime_reading = parseInt(storedElapsed_reading);
+                        updateTimerDisplay_reading();
+                    }
+                }
+
+                document.getElementById("startButton_reading").addEventListener("click", startTimer_reading);
+                document.getElementById("stopButton_reading").addEventListener("click", stopTimer_reading);
+                window.addEventListener("beforeunload", saveTimerState);
+                window.addEventListener("load", loadTimerState);
+            </script> 
+        </article>
+
+        <!-- 말하기 시작 -->  
+        <article>
+            <h2 id="timer_speaking">0:00</h2>
+            <button id="startButton_speaking">SPEAKING START</button>
+            <button id="stopButton_speaking">SPEAKING PAUSE</button>
+
+            <script>
+                let startTime_speaking;
+                let elapsedTime_speaking = 0;
+                let timerInterval_speaking;
+
+                function startTimer_speaking() {
+                    startTime_speaking = Date.now() - elapsedTime_speaking;
+                    timerInterval_speaking = setInterval(updateTimer_speaking, 10);
+                }
+
+                function stopTimer_speaking() {
+                    clearInterval(timerInterval_speaking);
+                }
+
+                function updateTimer_speaking() {
+                    let currentTime = Date.now();
+                    elapsedTime_speaking = currentTime - startTime_speaking;
+                    updateTimerDisplay_speaking();
+                }
+
+                function updateTimerDisplay_speaking() {
+                    let minutes = Math.floor(elapsedTime_speaking / 60000);
+                    let seconds = Math.floor((elapsedTime_speaking % 60000) / 1000);
+
+                    let timerDisplay_speaking = minutes.toString().padStart(2, '0') + ':' +
+                                    seconds.toString().padStart(2, '0');
+
+                    document.getElementById("timer_speaking").textContent = timerDisplay_speaking;
+                }
+
+                function saveTimerState() {
+                    localStorage.setItem('stopwatchElapsed_speaking', elapsedTime_speaking.toString());
+                }
+
+                function loadTimerState() {
+                    let storedElapsed_speaking = localStorage.getItem('stopwatchElapsed_speaking');
+                    if (storedElapsed_speaking) {
+                        elapsedTime_speaking = parseInt(storedElapsed_speaking);
+                        updateTimerDisplay_speaking();
+                    }
+                }
+
+                document.getElementById("startButton_speaking").addEventListener("click", startTimer_speaking);
+                document.getElementById("stopButton_speaking").addEventListener("click", stopTimer_speaking);
+                window.addEventListener("beforeunload", saveTimerState);
+                window.addEventListener("load", loadTimerState);
+            </script> 
+        </article>
+
+        <!-- 코딩 시작 -->  
+        <article>
+            <h2 id="timer_coding">0:00</h2>
+            <button id="startButton_coding">CODING START</button>
+            <button id="stopButton_coding">CODING PAUSE</button>
+
+            <script>
+                let startTime_coding;
+                let elapsedTime_coding = 0;
+                let timerInterval_coding;
+
+                function startTimer_coding() {
+                    startTime_coding = Date.now() - elapsedTime_coding;
+                    timerInterval_coding = setInterval(updateTimer_coding, 10);
+                }
+
+                function stopTimer_coding() {
+                    clearInterval(timerInterval_coding);
+                }
+
+                function updateTimer_coding() {
+                    let currentTime = Date.now();
+                    elapsedTime_coding = currentTime - startTime_coding;
+                    updateTimerDisplay_coding();
+                }
+
+                function updateTimerDisplay_coding() {
+                    let minutes = Math.floor(elapsedTime_coding / 60000);
+                    let seconds = Math.floor((elapsedTime_coding % 60000) / 1000);
+
+                    let timerDisplay_coding = minutes.toString().padStart(2, '0') + ':' +
+                                    seconds.toString().padStart(2, '0');
+
+                    document.getElementById("timer_coding").textContent = timerDisplay_coding;
+                }
+
+                function saveTimerState() {
+                    localStorage.setItem('stopwatchElapsed_coding', elapsedTime_coding.toString());
+                }
+
+                function loadTimerState() {
+                    let storedElapsed_coding = localStorage.getItem('stopwatchElapsed_coding');
+                    if (storedElapsed_coding) {
+                        elapsedTime_coding = parseInt(storedElapsed_coding);
+                        updateTimerDisplay_coding();
+                    }
+                }
+
+                document.getElementById("startButton_coding").addEventListener("click", startTimer_coding);
+                document.getElementById("stopButton_coding").addEventListener("click", stopTimer_coding);
+                window.addEventListener("beforeunload", saveTimerState);
+                window.addEventListener("load", loadTimerState);
+            </script>
+    </section>
+</body>
+</html>
