@@ -25,53 +25,53 @@
             <button id="stopButton_listening">LISTENING PASUE</button>
 
             <script>
-                let startTime;
-                let elapsedTime = 0;
-                let timerInterval;
+                let startTime_listening;
+                let elapsedTime_listening = 0;
+                let timerInterval_listening;
 
-                function startTimer() {
-                    startTime = Date.now() - elapsedTime;
-                    timerInterval = setInterval(updateTimer, 10);
+                function startTimer_listening() {
+                    startTime_listening = Date.now() - elapsedTime_listening;
+                    timerInterval_listening = setInterval(updateTimer, 10);
                 }
 
-                function stopTimer() {
-                    clearInterval(timerInterval);
+                function stopTimer_listening() {
+                    clearInterval(timerInterval_listening);
                 }
 
                 function updateTimer() {
                     let currentTime = Date.now();
-                    elapsedTime = currentTime - startTime;
+                    elapsedTime_listening = currentTime - startTime_listening;
                     updateTimerDisplay_listening();
                 }
 
                 function updateTimerDisplay_listening() {
-                    let hours = Math.floor(elapsedTime / 3600000); 
-                    let minutes = Math.floor((elapsedTime % 3600000) / 60000); 
-                    let seconds = Math.floor((elapsedTime % 60000) / 1000); 
+                    let hours = Math.floor(elapsedTime_listening / 3600000); 
+                    let minutes = Math.floor((elapsedTime_listening % 3600000) / 60000); 
+                    let seconds = Math.floor((elapsedTime_listening % 60000) / 1000); 
                     /* 분까지만 사용할 경우 let hours = Math.floor(elapsedTime / 60000);
                     let seconds = Math.floor((elapsedTime % 60000) / 1000);*/
 
-                    let timerDisplay = hours.toString().padStart(2, '0') + ':' + 
+                    let timerDisplay_listening = hours.toString().padStart(2, '0') + ':' + 
                                     minutes.toString().padStart(2, '0') + ':' +
                                     seconds.toString().padStart(2, '0');
 
-                    document.getElementById("timer_listening").textContent = timerDisplay;
+                    document.getElementById("timer_listening").textContent = timerDisplay_listening;
                 }
 
                 function saveTimerState() {
-                    localStorage.setItem('stopwatchElapsed_listening', elapsedTime.toString());
+                    localStorage.setItem('stopwatchElapsed_listening', elapsedTime_listening.toString());
                 }
 
                 function loadTimerState() {
                     let storedElapsed_listening = localStorage.getItem('stopwatchElapsed_listening');
                     if (storedElapsed_listening) {
-                        elapsedTime = parseInt(storedElapsed_listening);
+                        elapsedTime_listening = parseInt(storedElapsed_listening);
                         updateTimerDisplay_listening();
                     }
                 }
 
-                document.getElementById("startButton_listening").addEventListener("click", startTimer);
-                document.getElementById("stopButton_listening").addEventListener("click", stopTimer);
+                document.getElementById("startButton_listening").addEventListener("click", startTimer_listening);
+                document.getElementById("stopButton_listening").addEventListener("click", stopTimer_listening);
                 window.addEventListener("beforeunload", saveTimerState);
                 window.addEventListener("load", loadTimerState);
             </script> 
@@ -104,10 +104,12 @@
                 }
 
                 function updateTimerDisplay_reading() {
-                    let minutes = Math.floor(elapsedTime_reading / 60000);
-                    let seconds = Math.floor((elapsedTime_reading % 60000) / 1000);
+                    let hours = Math.floor(elapsedTime_reading / 3600000); 
+                    let minutes = Math.floor((elapsedTime_reading % 3600000) / 60000); 
+                    let seconds = Math.floor((elapsedTime_reading % 60000) / 1000); 
 
-                    let timerDisplay_reading = minutes.toString().padStart(2, '0') + ':' +
+                    let timerDisplay_reading = hours.toString().padStart(2, '0') + ':' + 
+                                    minutes.toString().padStart(2, '0') + ':' +
                                     seconds.toString().padStart(2, '0');
 
                     document.getElementById("timer_reading").textContent = timerDisplay_reading;
@@ -159,10 +161,12 @@
                 }
 
                 function updateTimerDisplay_speaking() {
-                    let minutes = Math.floor(elapsedTime_speaking / 60000);
-                    let seconds = Math.floor((elapsedTime_speaking % 60000) / 1000);
+                    let hours = Math.floor(elapsedTime_speaking / 3600000); 
+                    let minutes = Math.floor((elapsedTime_speaking % 3600000) / 60000); 
+                    let seconds = Math.floor((elapsedTime_speaking % 60000) / 1000); 
 
-                    let timerDisplay_speaking = minutes.toString().padStart(2, '0') + ':' +
+                    let timerDisplay_speaking = hours.toString().padStart(2, '0') + ':' + 
+                                    minutes.toString().padStart(2, '0') + ':' +
                                     seconds.toString().padStart(2, '0');
 
                     document.getElementById("timer_speaking").textContent = timerDisplay_speaking;
@@ -214,10 +218,12 @@
                 }
 
                 function updateTimerDisplay_coding() {
-                    let minutes = Math.floor(elapsedTime_coding / 60000);
-                    let seconds = Math.floor((elapsedTime_coding % 60000) / 1000);
+                    let hours = Math.floor(elapsedTime_coding / 3600000); 
+                    let minutes = Math.floor((elapsedTime_coding % 3600000) / 60000); 
+                    let seconds = Math.floor((elapsedTime_coding % 60000) / 1000); 
 
-                    let timerDisplay_coding = minutes.toString().padStart(2, '0') + ':' +
+                    let timerDisplay_coding = hours.toString().padStart(2, '0') + ':' + 
+                                    minutes.toString().padStart(2, '0') + ':' +
                                     seconds.toString().padStart(2, '0');
 
                     document.getElementById("timer_coding").textContent = timerDisplay_coding;
