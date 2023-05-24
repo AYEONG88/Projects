@@ -6,10 +6,12 @@
   <style>
     body {text-align: center; font-size: 48px; background:yellow;}
     button {font-size: 24px; padding: 10px 20px;}
+    img{position: absolute; z-index: -1; width:100%; }
   </style>
 </head>
 <body>
     <section>
+        <img id="introImg" src="./img/homer.png">
         <!-- 듣기 시작 -->  
         <article>
             <h2 id="timer_listening">0:00</h2>
@@ -233,10 +235,10 @@
     <script>
         //random img
         var imgArray= new Array();
-        imgArray[0]="https://ayeong88.github.io/Projects/LawOf10000/img/bart.png";  
-        imgArray[1]="https://ayeong88.github.io/Projects/LawOf10000/img/homer.png"; 
-        imgArray[2]="https://ayeong88.github.io/Projects/LawOf10000/img/lisa.png"; 
-        imgArray[3]="https://ayeong88.github.io/Projects/LawOf10000/img/maggie.png"; 
+        imgArray[0]="./img/bart.png";  
+        imgArray[1]="./img/homer.png"; 
+        imgArray[2]="./img/lisa.png"; 
+        imgArray[3]="./img/maggie.png"; 
         imgArray[4]="https://ayeong88.github.io/Projects/LawOf10000/img/marge.png"; 
     </script>
 </body>
