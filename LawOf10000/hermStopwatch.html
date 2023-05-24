@@ -45,10 +45,14 @@
                 }
 
                 function updateTimerDisplay_listening() {
-                    let minutes = Math.floor(elapsedTime / 60000);
-                    let seconds = Math.floor((elapsedTime % 60000) / 1000);
+                    let hours = Math.floor(elapsedTime / 3600000); 
+                    let minutes = Math.floor((elapsedTime % 3600000) / 60000); 
+                    let seconds = Math.floor((elapsedTime % 60000) / 1000); 
+                    /* 분까지만 사용할 경우 let hours = Math.floor(elapsedTime / 60000);
+                    let seconds = Math.floor((elapsedTime % 60000) / 1000);*/
 
-                    let timerDisplay = minutes.toString().padStart(2, '0') + ':' +
+                    let timerDisplay = hours.toString().padStart(2, '0') + ':' + 
+                                    minutes.toString().padStart(2, '0') + ':' +
                                     seconds.toString().padStart(2, '0');
 
                     document.getElementById("timer_listening").textContent = timerDisplay;
