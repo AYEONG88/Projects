@@ -1,18 +1,26 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>HERM'S STOPWATCH</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="https://ayeong88.github.io/Projects/LawOf10000/img/favicon.ico"/>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
   <style>
-    body {text-align: center; font-size: 48px; background:yellow;}
-    button {font-size: 24px; padding: 10px 20px;}
-    section{
-    position: relative;
-    padding: 10px; background: rgba(255, 255, 255, 0.8);}
+    *{box-sizing: border-box; margin:0; padding:0;}
+    html{width:100%; overflow: hidden;}
+    body {text-align: center; font-size: 30px; background:yellow; padding:10px;}
+    button {display:inline-block; font-size: 24px; padding: 10px 15px; width:50%; font-size:15px; float:left; margin-bottom:30px;}
+    section{box-sizing:border-box;
+    position: relative; width:100%; height:100vh;
+    padding: 10px; background: rgba(255, 255, 255, 0.8);  }
     img{position: absolute; z-index: -1; top: 50%;
-    left: 50%;
+    left: 50%; width:100%;
     transform: translate(-50%, -50%);}
+    article{width:100%; }
+
+    button strong{color:red; font-size:30px;}
+    h2{margin-bottom:0px;}
   </style>
 </head>
 <body onload="showImage()">
@@ -21,8 +29,8 @@
         <!-- 듣기 시작 -->  
         <article>
             <h2 id="timer_listening">0:00</h2>
-            <button id="startButton_listening">LISTENING START</button>
-            <button id="stopButton_listening">LISTENING PASUE</button>
+            <button id="startButton_listening"><strong>L</strong> START</button>
+            <button id="stopButton_listening"><strong>L</strong> PASUE</button>
 
             <script>
                 let startTime_listening;
@@ -80,8 +88,8 @@
         <!-- 읽기 시작 -->  
         <article>
             <h2 id="timer_reading">0:00</h2>
-            <button id="startButton_reading">READING START</button>
-            <button id="stopButton_reading">READING PAUSE</button>
+            <button id="startButton_reading"><strong>R</strong> START</button>
+            <button id="stopButton_reading"><strong>R</strong> PAUSE</button>
 
             <script>
                 let startTime_reading;
@@ -137,8 +145,8 @@
         <!-- 말하기 시작 -->  
         <article>
             <h2 id="timer_speaking">0:00</h2>
-            <button id="startButton_speaking">SPEAKING START</button>
-            <button id="stopButton_speaking">SPEAKING PAUSE</button>
+            <button id="startButton_speaking"><strong>S</strong> START</button>
+            <button id="stopButton_speaking"><strong>S</strong> PAUSE</button>
 
             <script>
                 let startTime_speaking;
@@ -194,8 +202,8 @@
         <!-- 코딩 시작 -->  
         <article>
             <h2 id="timer_coding">0:00</h2>
-            <button id="startButton_coding">CODING START</button>
-            <button id="stopButton_coding">CODING PAUSE</button>
+            <button id="startButton_coding"><strong>C</strong> START</button>
+            <button id="stopButton_coding"><strong>C</strong> PAUSE</button>
 
             <script>
                 let startTime_coding;
